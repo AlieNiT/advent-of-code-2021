@@ -7,6 +7,6 @@ university coursework, practice problems, or to challenge each other.
 
 # What am I doing here?
 
-I'm currently working on the problems in Advent of code 2021, and considering the fact that you can't upload your codes
-your codes in their website, I thought it'd be a good idea if I upload them on GitHub.
+I'm currently working on the problems in Advent of Code 2021, and considering the fact that you can't upload your codes
+on their website, I thought it'd be a good idea if I uploaded them on GitHub.
 
