@@ -1,3 +1,6 @@
+import math
+import queue
+
 import numpy as np
 
 
@@ -52,15 +55,15 @@ def same_counter(points1, points2):
 
 def rotate_check(positions1, positions2):
     rotations = orientations()
-    positions1 = np.array(positions1)
+    positions2 = np.array(positions2)
     for rotation in rotations:
-        current = (rotation @ positions1.T).T
+        current = (rotation @ positions2.T).T
         current = current.tolist()
-        count, d = same_counter(current, positions2)
+        count, d = same_counter(positions1, current)
         if count:
             print(d)
-            return merge(current, positions2, d)
-    return None
+            return d, current
+    return None, None
 
 
 scanners = []
@@ -75,20 +78,31 @@ while True:
             break
         scanner.append([int(x) for x in inp])
 
-while len(scanners) > 1:
-    print(len(scanners))
-    br = False
+q = queue.Queue()
+visited = {0: [0, 0, 0]}
+q.put(0)
+while not q.empty():
+    current = q.get()
+    print(visited)
     for i in range(len(scanners)):
-        print(i)
-        for j in range(i + 1, len(scanners)):
-            res = rotate_check(scanners[i], scanners[j])
-            if res:
-                print("index " + str(i) + " and " + str(j))
-                scanners.pop(j)
-                scanners.pop(i)
-                scanners.append(res)
-                br = True
-                break
-        if br:
-            break
-print(len(scanners[0]))
+        if i in visited:
+            continue
+        d, rotated = rotate_check(scanners[current], scanners[i])
+        if d:
+            visited[i] = [d[I] + visited[current][I] for I in range(3)]
+            q.put(i)
+            scanners[i] = rotated
+res = 0
+points = None
+for i in range(len(scanners)):
+    for j in range(len(scanners)):
+        if i == j:
+            continue
+        distance = [visited[i][I] - visited[j][I] for I in range(3)]
+        tmp = math.fabs(distance[0]) + math.fabs(distance[1]) + math.fabs(distance[2])
+        if tmp > res:
+            res = tmp
+            points = (i, j)
+print(res)
+print(visited[points[0]])
+print(visited[points[1]])
