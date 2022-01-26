@@ -2,7 +2,7 @@ import math
 
 hallway = ['.' for _ in range(11)]
 # rooms = [['.' for _ in range(2)] for _ in range(4)]
-rooms = [['B', 'A'], ['C', 'D'], ['b', 'c'], ['d', 'a']]
+rooms = [['D', 'B'], ['A', 'C'], ['d', 'b'], ['c', 'a']]
 costs = {'a': 1,
          'b': 10,
          'c': 100,
